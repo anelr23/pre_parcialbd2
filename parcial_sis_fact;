@@ -1,0 +1,51 @@
+CREATE DATABASE Parcial_sis_factt;
+USE parcial_sis_fact;
+
+#Creación de las tablas
+CREATE TABLE Tamaño (
+tamano_id INT PRIMARY KEY,
+codigo_tamano VARCHAR(255),
+descripcion VARCHAR(255)
+);
+
+CREATE TABLE Categoría (
+categoria_id INT PRIMARY KEY,
+categoria_principal VARCHAR(255),
+nombre_categoria VARCHAR(255)
+);
+
+CREATE TABLE Producto (
+producto_id INT PRIMARY KEY,
+nombre_producto VARCHAR(255),
+precio DECIMAL (10,2),
+tamano_id INT,
+categoria_id INT,
+FOREIGN KEY (tamano_id) REFERENCES Tamaño (tamano_id),
+FOREIGN KEY (categoria_id) REFERENCES Categoría (categoria_id)
+);
+
+CREATE TABLE Color (
+color_id INT,
+producto_id INT,
+PRIMARY KEY (color_id, producto_id),
+FOREIGN KEY (color_id) REFERENCES Color (color_id),
+FOREIGN KEY (producto_id) REFERENCES Producto(producto_id)
+);
+
+#Inserción de datos en las tablas
+INSERT INTO Tamaño (tamano_id, codigo_tamano, descripcion, tipo_lista, tipo_si_no) VALUES
+(1, 'S', 'Pequeño', 'lista1', TRUE),
+(2, 'M', 'Mediano', 'lista2', FALSE);
+
+INSERT INTO Categoría (categoria_id, categoria_principal, nombre_categoria, tipo_lista, tipo_si_no) VALUES
+(1, 'Main', 'Vestimenta', 'lista1', TRUE);
+
+INSERT INTO Producto (producto_id, nombre_producto, precio, tamano_id, categoria_id, tipo_lista, tipo_si_no) VALUES
+(1, 'Suéter', 19.99, 1, 1, 'lista1', TRUE);
+
+INSERT INTO Color (color_id, codigo_color, nombre_color, tipo_lista, tipo_si_no) VALUES
+(1, 'Red', 'Red', 'lista1', TRUE);
+
+INSERT INTO Colores_del_Producto (color_id, producto_id, tipo_lista, tipo_si_no) VALUES
+(1, 1, 'lista1', TRUE);
+
