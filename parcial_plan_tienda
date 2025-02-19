@@ -1,0 +1,60 @@
+#Creación de la base de datos
+CREATE DATABASE parcial_plan_tienda;
+USE parcial_plan_tienda;
+
+#Creación de Tablas 
+CREATE TABLE Región (
+codigo_region INT PRIMARY KEY,
+descripcion_region VARCHAR(255)
+);
+
+CREATE TABLE Tienda (
+codigo_tienda INT PRIMARY KEY,
+nombre_tienda VARCHAR(255),
+ventas_tienda DECIMAL (10,2),
+codigo_region INT,
+FOREIGN KEY (codigo_region) REFERENCES Región(codigo_region)
+);
+
+CREATE TABLE Empleo (
+codigo_empleo INT PRIMARY KEY,
+descripcion_empleo VARCHAR(255),
+salario_base_empleo DECIMAL (10,2)
+);
+
+CREATE TABLE Empleado (
+codigo_empleado INT PRIMARY KEY,
+titulo_empleado VARCHAR(255),
+apellido_empleado VARCHAR(255),
+nombre_empleado VARCHAR(255),
+fecha_nacimiento_empleado DATE,
+codigo_empleo INT,
+codigo_tienda INT,
+FOREIGN KEY (codigo_empleo) REFERENCES Empleo(codigo_empleo),
+FOREIGN KEY (codigo_tienda) REFERENCES Tienda(codigo_tienda)
+);
+
+ALTER TABLE Región ADD COLUMN tipo_lista VARCHAR(255);
+ALTER TABLE Región ADD COLUMN tipo_si_no BOOLEAN;
+
+ALTER TABLE Tienda ADD COLUMN tipo_lista VARCHAR(255);
+ALTER TABLE Tienda ADD COLUMN tipo_si_no BOOLEAN;
+
+ALTER TABLE Empleo ADD COLUMN tipo_lista VARCHAR(255);
+ALTER TABLE Empleo ADD COLUMN tipo_si_no BOOLEAN;
+
+ALTER TABLE Empleado ADD COLUMN tipo_lista VARCHAR(255);
+ALTER TABLE Empleado ADD COLUMN tipo_si_no BOOLEAN;
+
+#Inserción de los datos en las tablas
+INSERT INTO Región (codigo_region, descripcion_region, tipo_lista, tipo_si_no) VALUES
+(1, 'Norte', 'lista1', TRUE);
+
+INSERT INTO Tienda (codigo_tienda, nombre_tienda, ventas_tienda, codigo_region, tipo_lista, tipo_si_no) VALUES
+(1, 'Tienda 1', 10000.50, 1, 'lista1', TRUE);
+
+INSERT INTO Empleo (codigo_empleo, descripcion_empleo, salario_base_empleo, tipo_lista, tipo_si_no) VALUES
+(1, 'Manager', 50000, 'lista1', TRUE);
+
+INSERT INTO Empleado (codigo_empleado, titulo_empleado, apellido_empleado, nombre_empleado, fecha_nacimiento_empleado, codigo_empleo, codigo_tienda, tipo_lista, tipo_si_no) VALUES
+(1, 'Señor', 'Smith', 'John', '1980-07-04', 1, 1, 'lista1', TRUE);
